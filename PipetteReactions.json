@@ -1,0 +1,201 @@
+{
+  "modes": [
+    {
+      "id": "flocculant",
+      "implementation": "custom",
+      "detect": "share",
+      "labelKey": "hydra_mode_flocculant",
+      "label": "Flocculant",
+      "mainLiquid": "flocculant",
+      "priority": 100,
+      "minShare": 0.5,
+      "stages": [
+        {
+          "id": "purify_heavy_metal",
+          "label": "Purify heavy metal",
+          "kind": "reaction",
+          "substrate": {
+            "liquid": "heavy_metal",
+            "locations": ["target"]
+          },
+          "reagent": {
+            "liquid": "flocculant",
+            "locations": ["pipette"]
+          },
+          "catalytic": null,
+          "conversion": true,
+          "consume":{
+            "target.heavy_metal": 5,
+            "pipette.flocculant": 1
+          },
+          "produce": {
+            "debris": 5
+          },
+          "temperatureMin": 50,
+          "temperatureMax": 65
+        },
+        {
+          "id": "purify_chemical_contaminant",
+          "label": "Purify chemical contaminant",
+          "kind": "reaction",
+          "substrate": {
+            "liquid": "chemical_contaminant",
+            "locations": ["target"]
+          },
+          "reagent": {
+            "liquid": "flocculant",
+            "locations": ["pipette"]
+          },
+          "catalytic": null,
+          "conversion": true,
+          "consume":{
+            "target.chemical_contaminant": 5,
+            "pipette.flocculant": 1
+          },
+          "produce": {
+            "debris": 5
+          },
+          "temperatureMin": 50,
+          "temperatureMax": 65
+        },
+        {
+          "id": "purify_sodium_suspension",
+          "label": "Purify sodium suspension",
+          "kind": "reaction",
+          "substrate": {
+            "liquid": "sodium_suspension",
+            "locations": ["target"]
+          },
+          "reagent": {
+            "liquid": "flocculant",
+            "locations": ["pipette"]
+          },
+          "catalytic": null,
+          "conversion": true,
+          "consume":{
+            "target.sodium_suspension": 5,
+            "pipette.flocculant": 1
+          },
+          "produce": {
+            "water": 5
+          },
+          "temperatureMin": 50,
+          "temperatureMax": 65
+        }
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "mode": "acid",
+      "addStage": {
+        "id": "sodium_reduction",
+        "label": "Sodium Reduction",
+        "kind": "reaction",
+        "substrate": {
+          "liquid": "sodium_suspension",
+          "locations": ["target"]
+        },
+        "reagent": {
+          "liquid": "acid",
+          "locations": ["pipette"]
+        },
+        "catalytic": null,
+        "conversion": true,
+        "consume": {
+          "target.sodium_suspension": 1,
+          "pipette.acid": 1
+        },
+        "produce": {
+          "reducing_agent": 0.8,
+          "debris": 0.8,
+          "mineral": 0.4
+        },
+        "temperatureMin": 90,
+        "temperatureMax": 110
+      }
+    },
+    {
+      "mode": "acid",
+      "addStage": {
+        "id": "flocculant_neutralization",
+        "label": "Flocculant Neutralization",
+        "kind": "reaction",
+        "substrate": {
+          "liquid": "flocculant",
+          "locations": ["target"]
+        },
+        "reagent": {
+          "liquid": "acid",
+          "locations": ["pipette"]
+        },
+        "catalytic": null,
+        "conversion": true,
+        "consume": {
+          "target.flocculant": 2,
+          "pipette.acid": 1
+        },
+        "produce": {
+          "debris": 2.7,
+          "mineral": 0.3
+        }
+      }
+    },
+    {
+      "mode": "base",
+      "addStage": {
+        "id": "sugar_breakdown",
+        "label": "Sugar Breakdown",
+        "kind": "reaction",
+        "substrate": {
+          "liquid": "sugar",
+          "locations": ["target"]
+        },
+        "reagent": {
+          "liquid": "base",
+          "locations": ["pipette"]
+        },
+        "catalytic": null,
+        "conversion": true,
+        "consume": {
+          "target.sugar": 10,
+          "pipette.base": 1
+        },
+        "produce": {
+          "debris": 11
+        },
+        "temperatureMin": 40,
+        "temperatureMax": 50
+      }
+    },
+    {
+      "mode": "base",
+      "addStage": {
+        "id": "starch_activation",
+        "label": "Starch Activation",
+        "kind": "reaction",
+        "substrate": {
+          "liquid": "starch",
+          "locations": ["target"]
+        },
+        "reagent": {
+          "liquid": "base",
+          "locations": ["pipette"]
+        },
+        "catalytic": null,
+        "conversion": true,
+        "consume": {
+          "target.starch": 3,
+          "pipette.base": 1
+        },
+        "produce": {
+          "flocculant": 2.6,
+          "water": 1.2,
+          "mineral": 0.2
+        },
+        "temperatureMin": 40,
+        "temperatureMax": 50
+      }
+    }
+  ]
+}
